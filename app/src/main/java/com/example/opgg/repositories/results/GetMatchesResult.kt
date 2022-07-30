@@ -1,9 +1,9 @@
 package com.example.opgg.repositories.results
 
 import android.os.Parcelable
-import com.example.opgg.models.Champion
-import com.example.opgg.models.Game
-import com.example.opgg.models.Position
+import com.example.opgg.models.server.Champion
+import com.example.opgg.models.server.Game
+import com.example.opgg.models.server.Position
 import com.google.gson.annotations.SerializedName
 
 @kotlinx.parcelize.Parcelize

@@ -19,5 +19,5 @@ abstract class RepositoryModule{
 
 interface IRepository {
     fun getSummoner(): Single<GetSummonerResult>
-    fun getMatches(): Single<GetMatchesResult>
+    fun getMatches(lastMatch: String?): Single<GetMatchesResult>
 }

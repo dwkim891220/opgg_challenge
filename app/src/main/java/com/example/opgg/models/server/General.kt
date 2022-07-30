@@ -1,4 +1,4 @@
-package com.example.opgg.models
+package com.example.opgg.models.server
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -11,4 +11,5 @@ data class General (
     @SerializedName("assists") val assists: Int? = null,
     @SerializedName("opScoreBadge") val opScoreBadge: String? = null,
     @SerializedName("contributionForKillRate") val contributionForKillRate: String? = null,
+    @SerializedName("largestMultiKillString") val largestMultiKillString: String? = null,
 ) : Parcelable

@@ -1,4 +1,4 @@
-package com.example.opgg.models
+package com.example.opgg.models.server
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

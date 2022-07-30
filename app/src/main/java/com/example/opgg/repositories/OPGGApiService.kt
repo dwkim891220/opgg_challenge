@@ -17,6 +17,7 @@ OPGGApiService {
 
     @GET("$SUMMONER/{summoner_name}/$MATCHES")
     fun getMatches(
-        @Path("summoner_name") summonerName: String = Constants.SUMMONER_NAME
+        @Path("summoner_name") summonerName: String = Constants.SUMMONER_NAME,
+        @Query("lastMatch") lastMatch: String?
     ): Single<GetMatchesResult>
 }

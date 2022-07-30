@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class TierRank (
-    @SerializedName("name") val name: String? = null,
+data class Spell (
     @SerializedName("imageUrl") val imageUrl: String? = null,
 ) : Parcelable

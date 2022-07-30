@@ -1,4 +1,4 @@
-package com.example.opgg.models
+package com.example.opgg.models.server
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -6,7 +6,13 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Game (
-    @SerializedName("wins") val level: Int? = null,
-    @SerializedName("losses") val profileImageUrl: String? = null,
-    @SerializedName("tierRank") val profileBorderImageUrl: String? = null,
+    @SerializedName("champion") val champion: Champion? = null,
+    @SerializedName("spells") val spells: List<Spell>? = null,
+    @SerializedName("peak") val peak: List<String>? = null,
+    @SerializedName("items") val items: List<Item>? = null,
+    @SerializedName("createDate") val createDate: Long? = null,
+    @SerializedName("gameType") val gameType: String? = null,
+    @SerializedName("gameLength") val gameLength: String? = null,
+    @SerializedName("isWin") val isWin: Boolean? = null,
+    @SerializedName("stats") val stats: Stat? = null,
 ) : Parcelable
