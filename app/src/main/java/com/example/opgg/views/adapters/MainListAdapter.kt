@@ -3,18 +3,41 @@ package com.example.opgg.views.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.RecyclerView
 import com.example.opgg.databinding.IGameBinding
 import com.example.opgg.databinding.LSummaryBinding
 import com.example.opgg.databinding.LSummonerBinding
 import com.example.opgg.models.client.CGame
+import com.example.opgg.models.client.CLeague
 import com.example.opgg.models.client.CSummary
 import com.example.opgg.models.client.CSummoner
 import com.example.opgg.utils.view.BaseListAdapter
 import com.example.opgg.utils.view.DataBoundViewHolder
+import com.example.opgg.utils.view.WrapperLayoutManager
+import com.example.opgg.viewmodels.MainViewModel
 
 class MainListAdapter(
     private val lifecycleOwner: LifecycleOwner,
+    private val viewModel: MainViewModel,
 ): BaseListAdapter<IMainListItem>() {
+    fun addGameList(list: List<CGame>){
+        val existSummary = dataList.filterIsInstance<CSummary>().firstOrNull()
+
+        if(existSummary != null){
+            val summaryIndex = dataList.indexOf(existSummary)
+            if(summaryIndex > -1){
+                existSummary.update(list)
+                notifyItemChanged(summaryIndex)
+            }
+        }else{
+            dataList.add(CSummary().apply { update(list) })
+            notifyItemInserted(dataList.size)
+        }
+
+        dataList.addAll(list)
+        notifyItemRangeChanged(dataList.size, list.size)
+    }
+
     override fun getItemViewType(position: Int): Int =
         when(dataList[position]){
             is CSummoner -> IMainListItemType.Summoner.ordinal
@@ -45,7 +68,7 @@ class MainListAdapter(
 
     override fun bind(holder: DataBoundViewHolder, position: Int) {
         when(holder){
-            is SummonerViewHolder -> holder.bind(dataList[position] as? CSummoner)
+            is SummonerViewHolder -> holder.bind(dataList[position] as? CSummoner, viewModel)
             is SummaryViewHolder -> holder.bind(dataList[position] as? CSummary)
             is GameViewHolder -> holder.bind(dataList[position] as? CGame)
             else -> throw RuntimeException()
@@ -56,10 +79,20 @@ class MainListAdapter(
         private val lifecycleOwner: LifecycleOwner,
         private val binding: LSummonerBinding,
     ): DataBoundViewHolder(binding) {
-        fun bind(data: CSummoner?) {
+        fun bind(data: CSummoner?, viewModel: MainViewModel) {
             data?.run {
                 binding.lifecycleOwner = lifecycleOwner
                 binding.data = this
+                binding.viewModel = viewModel
+                initRecyclerView(this.leagues)
+            }
+        }
+
+        private fun initRecyclerView(data: List<CLeague>){
+            binding.rvLeagueList.run {
+                layoutManager = WrapperLayoutManager(context, RecyclerView.HORIZONTAL)
+                addItemDecoration(LeagueListDecoration(context))
+                adapter = LeagueListAdapter(lifecycleOwner, data)
             }
         }
     }

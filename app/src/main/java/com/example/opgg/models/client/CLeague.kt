@@ -3,10 +3,10 @@ package com.example.opgg.models.client
 import com.example.opgg.models.server.League
 
 class CLeague(data: League?) {
-    val name: String = data?.name ?: ""
-    val tier: String = data?.tier ?: ""
-    val imageUrl: String = data?.imageUrl ?: ""
-    val lp: String = "${data?.lp?.toString()} LP"
+    val name: String = data?.tierRank?.name ?: ""
+    val tier: String = data?.tierRank?.tier ?: ""
+    val imageUrl: String = data?.tierRank?.imageUrl ?: ""
+    val lp: String = "${data?.tierRank?.lp?.toString()} LP"
 
     val displayWinLosses: String
 

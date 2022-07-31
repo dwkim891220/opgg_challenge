@@ -11,6 +11,6 @@ class RepositoryImpl @Inject constructor(
     private val apiService: OPGGApiService
 ): IRepository {
     override fun getSummoner(): Single<GetSummonerResult> = apiService.getSummoner()
-    override fun getMatches(lastMatch: String?): Single<GetMatchesResult> =
-        apiService.getMatches(lastMatch = lastMatch)
+    override fun getMatches(lastMatch: Long?): Single<GetMatchesResult> =
+        apiService.getMatches(lastMatch = lastMatch?.toString())
 }

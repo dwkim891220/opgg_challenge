@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">OPGG</string>
+
+    <string name="win">승</string>
+    <string name="lose">패</string>
+
+    <string name="mvp">MVP</string>
+    <string name="ace">ACE</string>
+
+    <string name="latestGameLabel">최근 %d게임 분석</string>
+    <string name="displayWinsLosses">%d승 %d패</string>
 </resources>

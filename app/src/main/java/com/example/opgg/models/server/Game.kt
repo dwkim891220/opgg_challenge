@@ -12,7 +12,7 @@ data class Game (
     @SerializedName("items") val items: List<Item>? = null,
     @SerializedName("createDate") val createDate: Long? = null,
     @SerializedName("gameType") val gameType: String? = null,
-    @SerializedName("gameLength") val gameLength: String? = null,
+    @SerializedName("gameLength") val gameLength: Int? = null,
     @SerializedName("isWin") val isWin: Boolean? = null,
     @SerializedName("stats") val stats: Stat? = null,
 ) : Parcelable

@@ -6,9 +6,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class General (
-    @SerializedName("kills") val kills: Int? = null,
-    @SerializedName("deaths") val deaths: Int? = null,
-    @SerializedName("assists") val assists: Int? = null,
+    @SerializedName("kill") val kills: Int? = null,
+    @SerializedName("death") val deaths: Int? = null,
+    @SerializedName("assist") val assists: Int? = null,
     @SerializedName("opScoreBadge") val opScoreBadge: String? = null,
     @SerializedName("contributionForKillRate") val contributionForKillRate: String? = null,
     @SerializedName("largestMultiKillString") val largestMultiKillString: String? = null,

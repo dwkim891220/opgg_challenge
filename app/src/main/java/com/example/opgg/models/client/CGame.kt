@@ -9,7 +9,7 @@ class CGame(data: Game?) : IMainListItem {
     val contributionKillRate: String = data?.stats?.general?.contributionForKillRate ?: ""
     val gameType: String = data?.gameType ?: ""
     val multiKillString: String = data?.stats?.general?.largestMultiKillString ?: ""
-    val createTime: Long? = data?.createDate
+    val createDate: Long? = data?.createDate
     val kills: Int = data?.stats?.general?.kills ?: 0
     val deaths: Int = data?.stats?.general?.deaths ?: 0
     val assists: Int = data?.stats?.general?.assists ?: 0
@@ -50,13 +50,18 @@ class CGame(data: Game?) : IMainListItem {
                 emptyList()
             }
 
-        gameLength = if(data?.gameLength != null && data.gameLength.length > 4){
-            "${data.gameLength.substring(0, 1)}:${data.gameLength.substring(2, 3)}"
-        }else {
+        gameLength = if(data?.gameLength != null) {
+            val minute = data.gameLength/60
+            String.format(
+                "%.2s:%.2s",
+                minute.toString().padStart(2, '0'),
+                (data.gameLength-(minute*60)).toString().padStart(2, '0')
+            )
+        }else{
             ""
         }
 
-        displayCreateTime = createTime?.run { parsingDisplayCreateDate(this) } ?: ""
+        displayCreateTime = createDate?.run { parsingDisplayCreateDate(this) } ?: ""
 
         opBadge =
             when(data?.stats?.general?.opScoreBadge){

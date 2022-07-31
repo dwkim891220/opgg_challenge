@@ -3,12 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res-auto">
     <data>
-<!--        <variable-->
-<!--            name="appBarConfig"-->
-<!--            type="String" />-->
+        <variable
+            name="viewModel"
+            type="com.example.opgg.viewmodels.MainViewModel" />
     </data>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/layoutList"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/white">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/layoutList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="4dp"
+            android:clipToPadding="false"/>
+    </FrameLayout>
 </layout>
