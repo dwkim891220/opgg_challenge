@@ -1,22 +1,26 @@
 package com.example.opgg.models.client
 
 import com.example.opgg.models.server.Game
+import com.example.opgg.views.adapters.IMainListItem
 import java.util.*
 
-class CGame(data: Game?) {
+class CGame(data: Game?) : IMainListItem {
     val isWin: Boolean = data?.isWin ?: false
-    val championImageUrl: String = data?.champion?.imageUrl ?: ""
-    val opBadge: String = data?.stats?.general?.opScoreBadge ?: ""
     val contributionKillRate: String = data?.stats?.general?.contributionForKillRate ?: ""
     val gameType: String = data?.gameType ?: ""
     val multiKillString: String = data?.stats?.general?.largestMultiKillString ?: ""
     val createTime: Long? = data?.createDate
+    val kills: Int = data?.stats?.general?.kills ?: 0
+    val deaths: Int = data?.stats?.general?.deaths ?: 0
+    val assists: Int = data?.stats?.general?.assists ?: 0
+    val champion: CChampion = CChampion(data?.champion)
 
     val spellImageUrls: List<String>
     val runeImageUrls: List<String>
     val itemImageUrls: List<String>
     val gameLength: String
     val displayCreateTime: String
+    val opBadge: OpBadge
 
     init {
         spellImageUrls =
@@ -53,6 +57,13 @@ class CGame(data: Game?) {
         }
 
         displayCreateTime = createTime?.run { parsingDisplayCreateDate(this) } ?: ""
+
+        opBadge =
+            when(data?.stats?.general?.opScoreBadge){
+                "ACE" -> OpBadge.Ace
+                "MVP" -> OpBadge.Mvp
+                else -> OpBadge.None
+            }
     }
 
     private fun parsingDisplayCreateDate(time: Long): String{
@@ -76,4 +87,10 @@ class CGame(data: Game?) {
             else -> "방금전"
         }
     }
+}
+
+enum class OpBadge {
+    Ace,
+    Mvp,
+    None
 }

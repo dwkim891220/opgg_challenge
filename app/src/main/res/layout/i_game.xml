@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="com.example.opgg.models.client.OpBadge"/>
+        <variable
+            name="data"
+            type="com.example.opgg.models.client.CGame" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingStart="4dp"-->
+<!--            android:paddingTop="3dp"-->
+<!--            android:paddingEnd="4dp"-->
+<!--            android:paddingBottom="3dp"-->
+<!--            android:background="@{data.opBadge == OpBadge.Mvp ? @drawable/r_badge_mvp : data.opBadge == OpBadge.Ace ? @drawable/r_badge_ace : null}"/>-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

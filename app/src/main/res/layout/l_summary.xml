@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="data"
+            type="com.example.opgg.models.client.CSummary" />
+    </data>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/layoutList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</layout>
