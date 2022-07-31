@@ -19,7 +19,8 @@ import com.example.opgg.viewmodels.MainViewModel
 class MainListAdapter(
     private val lifecycleOwner: LifecycleOwner,
     private val viewModel: MainViewModel,
-): BaseListAdapter<IMainListItem>() {
+    infiniteScrollListener: (() -> Unit),
+): BaseListAdapter<IMainListItem>(infiniteScrollListener = infiniteScrollListener) {
     fun addGameList(list: List<CGame>){
         val existSummary = dataList.filterIsInstance<CSummary>().firstOrNull()
 

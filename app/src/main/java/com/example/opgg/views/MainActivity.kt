@@ -49,7 +49,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initLayout(){
-        listAdapter = MainListAdapter(this, viewModel)
+        listAdapter = MainListAdapter(
+            this,
+            viewModel
+        ){
+            viewModel.getGames()
+        }
         binding.layoutList.run {
             layoutManager = WrapperLayoutManager(context, RecyclerView.VERTICAL)
             adapter = listAdapter

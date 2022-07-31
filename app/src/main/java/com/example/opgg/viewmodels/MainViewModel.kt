@@ -17,12 +17,14 @@ class MainViewModel @Inject constructor(
     private val scheduleProvider: ScheduleProvider,
 ): RxViewModel() {
     val mainListState = MutableLiveData<ViewModelState>()
+    var hasMoreList: Boolean = true
 
     private var lastMatches: Long? = null
 
     fun refresh(){
         mainListState.value = RefreshLayoutState
         lastMatches = null
+        hasMoreList = true
     }
 
     fun getSummoner(){
@@ -46,8 +48,12 @@ class MainViewModel @Inject constructor(
                 { result ->
                     val games = result.games?.map { game -> CGame(game) } ?: emptyList()
 
-                    lastMatches = games.last().createDate
-                    mainListState.value = AddGameListLayoutState(games)
+                    if(games.isNotEmpty()){
+                        lastMatches = games.last().createDate
+                        mainListState.value = AddGameListLayoutState(games)
+                    }
+
+                    hasMoreList = lastMatches != null && games.size == 20
                 },
                 { throwable ->
                     // TODO
