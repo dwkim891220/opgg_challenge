@@ -87,13 +87,48 @@
             android:paddingTop="3dp"
             android:paddingEnd="4dp"
             android:paddingBottom="3dp"
-            android:background="@{data.opBadge == OpBadge.Mvp ? @drawable/r_badge_mvp : data.opBadge == OpBadge.Ace ? @drawable/r_badge_ace : null}"
-            android:text="@{data.opBadge == OpBadge.Mvp ? @string/mvp : data.opBadge == OpBadge.Ace ? @string/ace : null}"
             android:textColor="@color/white"
             android:textSize="12sp"
-            bind:show="@{data.opBadge != OpBadge.None}"
             app:layout_constraintStart_toStartOf="@id/iv_champion"
             app:layout_constraintTop_toTopOf="@id/v_champion_bottom_space"
-            app:layout_constraintEnd_toEndOf="@id/iv_champion" />
+            app:layout_constraintEnd_toEndOf="@id/iv_champion"
+            bind:show="@{data.opBadge != OpBadge.None}"
+            bind:opBadge="@{data.opBadge}" />
+        <include
+            android:id="@+id/l_spells_runes"
+            layout="@layout/l_spells_runes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            bind:spell1imageUrl="@{data.spellImageUrls[0]}"
+            bind:spell2imageUrl="@{data.spellImageUrls[1]}"
+            bind:rune1imageUrl="@{data.runeImageUrls[0]}"
+            bind:rune2imageUrl="@{data.runeImageUrls[1]}"
+            app:layout_constraintStart_toEndOf="@id/iv_champion"
+            app:layout_constraintTop_toTopOf="@id/iv_champion" />
+        <TextView
+            android:id="@+id/tv_kda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/dark_grey"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/l_spells_runes"
+            app:layout_constraintTop_toTopOf="@id/l_spells_runes"
+            app:layout_constraintBottom_toTopOf="@id/tv_contributionKillRate"
+            app:layout_constraintVertical_chainStyle="packed"
+            bind:displayKDA="@{data.kda}"/>
+        <TextView
+            android:id="@+id/tv_contributionKillRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@{@string/displayContributionKillRate(data.contributionKillRate)}"
+            android:textColor="@color/gunmetal"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_kda"
+            app:layout_constraintTop_toBottomOf="@id/tv_kda"
+            app:layout_constraintBottom_toBottomOf="@id/l_spells_runes"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

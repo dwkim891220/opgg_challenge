@@ -43,9 +43,9 @@
             android:textColor="@color/charcoal_grey"
             app:layout_constraintStart_toStartOf="@id/tv_label"
             app:layout_constraintTop_toBottomOf="@id/tv_winslosses"
-            bind:displayStats="@{data.displayStats}"/>
+            bind:displayKDA="@{data.displayStats}"/>
         <TextView
-            android:id="@+id/tv_kda"
+            android:id="@+id/tv_kdaRatio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
@@ -53,6 +53,6 @@
             android:textSize="10sp"
             app:layout_constraintStart_toStartOf="@id/tv_label"
             app:layout_constraintTop_toBottomOf="@id/tv_display_stats"
-            bind:displayKDA="@{data.kda}"/>
+            bind:highlightContributionKillRate="@{data.kda}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

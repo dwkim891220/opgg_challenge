@@ -14,13 +14,18 @@ class CGame(data: Game?) : IMainListItem {
     val deaths: Int = data?.stats?.general?.deaths ?: 0
     val assists: Int = data?.stats?.general?.assists ?: 0
     val champion: CChampion = CChampion(data?.champion)
+    val kda: String = "$kills / $deaths / $assists"
 
-    val spellImageUrls: List<String>
-    val runeImageUrls: List<String>
-    val itemImageUrls: List<String>
+    var spellImageUrls: List<String>
+    var runeImageUrls: List<String>
+    var itemImageUrls: List<String>
     val gameLength: String
     val displayCreateTime: String
     val opBadge: OpBadge
+
+    private val defaultSpellImageLength = 2
+    private val defaultRuneImageLength = 2
+    private val defaultItemsImageLength = 6
 
     init {
         spellImageUrls =
@@ -32,6 +37,10 @@ class CGame(data: Game?) : IMainListItem {
                 emptyList()
             }
 
+        if(spellImageUrls.size < defaultSpellImageLength) {
+            spellImageUrls = getEmptyStringList(spellImageUrls, defaultSpellImageLength)
+        }
+
         runeImageUrls =
             if(data?.peak != null && data.peak.isNotEmpty()){
                 data.peak
@@ -41,6 +50,10 @@ class CGame(data: Game?) : IMainListItem {
                 emptyList()
             }
 
+        if(runeImageUrls.size < defaultRuneImageLength) {
+            runeImageUrls = getEmptyStringList(runeImageUrls, defaultRuneImageLength)
+        }
+
         itemImageUrls =
             if(data?.items != null && data.items.isNotEmpty()){
                 data.items
@@ -49,6 +62,10 @@ class CGame(data: Game?) : IMainListItem {
             }else{
                 emptyList()
             }
+
+        if(itemImageUrls.size < defaultItemsImageLength) {
+            itemImageUrls = getEmptyStringList(itemImageUrls, defaultItemsImageLength)
+        }
 
         gameLength = if(data?.gameLength != null) {
             val minute = data.gameLength/60
@@ -92,10 +109,20 @@ class CGame(data: Game?) : IMainListItem {
             else -> "방금전"
         }
     }
+
+    private fun getEmptyStringList(existList:List<String>, length: Int): List<String>{
+        val list = existList.toMutableList()
+
+        for (index in (list.size)..length){
+            list.add("")
+        }
+
+        return list.toList()
+    }
 }
 
-enum class OpBadge {
-    Ace,
-    Mvp,
-    None
+enum class OpBadge(val displayString: String) {
+    Ace("ACE"),
+    Mvp("MVP"),
+    None("")
 }
