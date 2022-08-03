@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Champion (
+    @SerializedName("key") val key: String? = null,
     @SerializedName("imageUrl") val imageUrl: String? = null,
     @SerializedName("games") val games: Int? = null,
     @SerializedName("wins") val wins: Int? = null,

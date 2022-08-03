@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="data"
@@ -16,13 +17,17 @@
         android:paddingBottom="12dp">
         <TextView
             android:id="@+id/tv_label"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{@string/latestGameLabel(data.games.size)}"
+            android:text="@{@string/latestGameLabel(data.games)}"
             android:textColor="@color/cool_grey"
             android:textSize="10sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_most_champions_label"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintHorizontal_weight="0.5"
+            tools:text="최근 20게임 분석"/>
         <TextView
             android:id="@+id/tv_winslosses"
             android:layout_width="wrap_content"
@@ -54,5 +59,47 @@
             app:layout_constraintStart_toStartOf="@id/tv_label"
             app:layout_constraintTop_toBottomOf="@id/tv_display_stats"
             bind:highlightContributionKillRate="@{data.kda}"/>
+        <TextView
+            android:id="@+id/tv_most_champions_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="모스트 승률"
+            android:textColor="@color/cool_grey"
+            android:textSize="10sp"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/tv_label"
+            app:layout_constraintTop_toTopOf="@id/tv_label"
+            app:layout_constraintEnd_toStartOf="@id/tv_position_label"
+            app:layout_constraintHorizontal_weight="0.3"/>
+        <include
+            android:id="@+id/l_most_champions"
+            layout="@layout/l_most_champions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tv_most_champions_label"
+            app:layout_constraintTop_toTopOf="@id/tv_winslosses"
+            app:layout_constraintEnd_toEndOf="@id/tv_most_champions_label"
+            bind:data="@{data.mostChampions}"/>
+        <TextView
+            android:id="@+id/tv_position_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="포지션"
+            android:textColor="@color/cool_grey"
+            android:textSize="10sp"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/tv_most_champions_label"
+            app:layout_constraintTop_toTopOf="@id/tv_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="0.2"/>
+        <include
+            layout="@layout/l_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tv_position_label"
+            app:layout_constraintTop_toTopOf="@id/l_most_champions"
+            app:layout_constraintEnd_toEndOf="@id/tv_position_label"
+            app:layout_constraintBottom_toBottomOf="@id/l_most_champions"
+            bind:data="@{data.mostPosition}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,28 +1,35 @@
 package com.example.opgg.utils.view.bindingadapters
 
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
-import android.view.RoundedCorner
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.Request
 import com.bumptech.glide.request.RequestOptions
 import com.example.opgg.R
 import com.example.opgg.models.client.OpBadge
 import com.example.opgg.utils.view.GlideApp
 import com.example.opgg.utils.view.show
+import com.example.opgg.utils.view.toPixel
+
 
 @BindingAdapter("show")
 fun setLayoutShow(v: View, show: Boolean){
     v.show(show)
+}
+
+@BindingAdapter("imgDrawable")
+fun setImageDrawable(view: ImageView, drawable: Int?) {
+    if(drawable == null) return
+
+    view.setImageResource(drawable)
 }
 
 @BindingAdapter("glideUrl", "circleCrop", "roundedCorners", requireAll = false)
@@ -37,7 +44,7 @@ fun glideUrl(iv: ImageView, imageUrl: String?, circleCrop: Boolean = false, roun
         var options = RequestOptions().transform(FitCenter())
 
         if(roundedCorners > 0){
-            options = options.transform(RoundedCorners(roundedCorners))
+            options = options.transform(RoundedCorners(roundedCorners.toPixel(iv.context)))
         }
 
         glide.fitCenter()

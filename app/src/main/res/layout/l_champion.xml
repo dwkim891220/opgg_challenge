@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="data"
+            type="com.example.opgg.models.client.CChampion" />
+    </data>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            bind:glideUrl="@{data.imageUrl}"
+            bind:circleCrop="@{true}"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:text="@{data.displayRate}"
+            android:textSize="10sp"
+            android:textColor="@{data.winRate == 100 ? @color/darkish_pink : @color/dark_grey}"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

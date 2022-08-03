@@ -8,14 +8,11 @@
             name="imageUrl"
             type="String" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageView
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:background="@drawable/r_bg_item">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            bind:glideUrl="@{imageUrl}"
-            bind:roundedCorners="@{4}"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginEnd="2dp"
+        android:background="@drawable/r_bg_item"
+        bind:glideUrl="@{imageUrl}"
+        bind:roundedCorners="@{3}"/>
 </layout>

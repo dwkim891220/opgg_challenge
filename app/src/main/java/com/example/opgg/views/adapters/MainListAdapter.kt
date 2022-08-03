@@ -7,10 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.opgg.databinding.IGameBinding
 import com.example.opgg.databinding.LSummaryBinding
 import com.example.opgg.databinding.LSummonerBinding
-import com.example.opgg.models.client.CGame
-import com.example.opgg.models.client.CLeague
-import com.example.opgg.models.client.CSummary
-import com.example.opgg.models.client.CSummoner
+import com.example.opgg.models.client.*
+import com.example.opgg.models.server.Summary
 import com.example.opgg.utils.view.BaseListAdapter
 import com.example.opgg.utils.view.DataBoundViewHolder
 import com.example.opgg.utils.view.WrapperLayoutManager
@@ -21,22 +19,38 @@ class MainListAdapter(
     private val viewModel: MainViewModel,
     infiniteScrollListener: (() -> Unit),
 ): BaseListAdapter<IMainListItem>(infiniteScrollListener = infiniteScrollListener) {
-    fun addGameList(list: List<CGame>){
+    fun upsertSummary(
+        summary: Summary?,
+        champions: List<CChampion>,
+        positions: List<CPosition>,
+        games: List<CGame>,
+    ){
         val existSummary = dataList.filterIsInstance<CSummary>().firstOrNull()
 
         if(existSummary != null){
             val summaryIndex = dataList.indexOf(existSummary)
             if(summaryIndex > -1){
-                existSummary.update(list)
+                existSummary.update(
+                    summary,
+                    champions,
+                    positions,
+                    games
+                )
                 notifyItemChanged(summaryIndex)
             }
         }else{
-            dataList.add(CSummary().apply { update(list) })
+            dataList.add(
+                CSummary().apply {
+                    update(
+                        summary,
+                        champions,
+                        positions,
+                        games
+                    )
+                }
+            )
             notifyItemInserted(dataList.size)
         }
-
-        dataList.addAll(list)
-        notifyItemRangeChanged(dataList.size, list.size)
     }
 
     override fun getItemViewType(position: Int): Int =

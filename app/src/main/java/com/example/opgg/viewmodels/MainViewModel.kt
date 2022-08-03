@@ -1,8 +1,11 @@
 package com.example.opgg.viewmodels
 
 import androidx.lifecycle.MutableLiveData
+import com.example.opgg.models.client.CChampion
 import com.example.opgg.models.client.CGame
+import com.example.opgg.models.client.CPosition
 import com.example.opgg.models.client.CSummoner
+import com.example.opgg.models.server.Summary
 import com.example.opgg.repositories.IRepository
 import com.example.opgg.utils.viewmodel.RxViewModel
 import com.example.opgg.utils.viewmodel.ScheduleProvider
@@ -50,7 +53,14 @@ class MainViewModel @Inject constructor(
 
                     if(games.isNotEmpty()){
                         lastMatches = games.last().createDate
-                        mainListState.value = AddGameListLayoutState(games)
+                        mainListState.value = UpsertSummaryLayoutState(
+                            summary = result.summary,
+                            champions = result.champions?.map { champ -> CChampion(champ) }
+                                ?: emptyList(),
+                            positions = result.positions?.map { position -> CPosition(position) }
+                                ?: emptyList(),
+                            games = games,
+                        )
                     }
 
                     hasMoreList = lastMatches != null && games.size == 20
@@ -64,4 +74,9 @@ class MainViewModel @Inject constructor(
 
 object RefreshLayoutState : ViewModelState()
 data class AddSummonerLayoutState(val data: CSummoner) : ViewModelState()
-data class AddGameListLayoutState(val data: List<CGame>) : ViewModelState()
+data class UpsertSummaryLayoutState(
+    val summary: Summary?,
+    val champions: List<CChampion>,
+    val positions: List<CPosition>,
+    val games: List<CGame>,
+) : ViewModelState()

@@ -38,7 +38,15 @@ class MainActivity : AppCompatActivity() {
                     viewModel.getSummoner()
                 }
                 is AddSummonerLayoutState -> listAdapter.add(state.data)
-                is AddGameListLayoutState -> listAdapter.addGameList(state.data)
+                is UpsertSummaryLayoutState -> {
+                    listAdapter.upsertSummary(
+                        state.summary,
+                        state.champions,
+                        state.positions,
+                        state.games
+                    )
+                    listAdapter.addAll(state.games)
+                }
             }
         }
     }
