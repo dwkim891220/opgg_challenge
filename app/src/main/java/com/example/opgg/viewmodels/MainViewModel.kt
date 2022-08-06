@@ -31,44 +31,48 @@ class MainViewModel @Inject constructor(
     }
 
     fun getSummoner(){
-        repo.getSummoner()
-            .with(scheduleProvider)
-            .subscribe(
-                { result ->
-                    mainListState.value = AddSummonerLayoutState(CSummoner(result.summoner))
-                    getGames()
-                },
-                { throwable ->
-                    // TODO
-                }
-            )
+        launch {
+            repo.getSummoner()
+                .with(scheduleProvider)
+                .subscribe(
+                    { result ->
+                        mainListState.value = AddSummonerLayoutState(CSummoner(result.summoner))
+                        getGames()
+                    },
+                    { throwable ->
+                        // TODO
+                    }
+                )
+        }
     }
 
     fun getGames(){
-        repo.getMatches(lastMatches)
-            .with(scheduleProvider)
-            .subscribe(
-                { result ->
-                    val games = result.games?.map { game -> CGame(game) } ?: emptyList()
+        launch {
+            repo.getMatches(lastMatches)
+                .with(scheduleProvider)
+                .subscribe(
+                    { result ->
+                        val games = result.games?.map { game -> CGame(game) } ?: emptyList()
 
-                    if(games.isNotEmpty()){
-                        lastMatches = games.last().createDate
-                        mainListState.value = UpsertSummaryLayoutState(
-                            summary = result.summary,
-                            champions = result.champions?.map { champ -> CChampion(champ) }
-                                ?: emptyList(),
-                            positions = result.positions?.map { position -> CPosition(position) }
-                                ?: emptyList(),
-                            games = games,
-                        )
+                        if (games.isNotEmpty()) {
+                            lastMatches = games.last().createDate
+                            mainListState.value = UpsertSummaryLayoutState(
+                                summary = result.summary,
+                                champions = result.champions?.map { champ -> CChampion(champ) }
+                                    ?: emptyList(),
+                                positions = result.positions?.map { position -> CPosition(position) }
+                                    ?: emptyList(),
+                                games = games,
+                            )
+                        }
+
+                        hasMoreList = lastMatches != null && games.size == 20
+                    },
+                    { throwable ->
+                        // TODO
                     }
-
-                    hasMoreList = lastMatches != null && games.size == 20
-                },
-                { throwable ->
-                    // TODO
-                }
-            )
+                )
+        }
     }
 }
 
